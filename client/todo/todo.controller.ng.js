@@ -9,7 +9,7 @@ angular.module('manV1App')
 
 	// Sets the tasks variable to the meteor collection Tasks inside /model
 	$scope.tasks = $meteor.collection( function() {
-		return Tasks.find({}, { sort: { createdAt: -1 } })
+		return Tasks.find($scope.getReactively('query'), { sort: { createdAt: -1 } })
 	});
 
 	// Sets the task toggle to oon
@@ -20,8 +20,20 @@ angular.module('manV1App')
     	$scope.tasks.push( {
       		text: newTask,
       		createdAt: new Date() }
-
-
     	); 
 	};
+
+	// Changes the queried scope when active
+	$scope.$watch('hideCompleted', function() {
+		if ($scope.hideCompleted)
+			$scope.query = {checked: {$ne: true}};
+		else
+			$scope.query = {};
+	});
+
+	// Counts incomplete tasks
+	$scope.incompleteCount = function () {
+		return Tasks.find({ checked: {$ne: true} }).count();
+	};
+
 });
