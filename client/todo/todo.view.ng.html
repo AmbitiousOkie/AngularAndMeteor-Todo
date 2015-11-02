@@ -1,6 +1,6 @@
 <div>
   	<ul ng-if="toggle">
-			<li ng-repeat="item in list | orderBy:checkbox">
+			<li ng-repeat="item in tasks">
 				<div ng-include="'client/todo/partials/task.ng.html'"></div>
 			</li>
 		</ul>
@@ -8,10 +8,13 @@
 	<button ng-hide="toggle" ng-click="toggle = true">Show Tasks</button>
 	<button ng-hide="!toggle" ng-click="toggle = false">Hide Tasks</button>
 
-	<form ng-submit="addTask()">
-		Task <input type="text" placeholder="Task" ng-model="task">
-		Checked <input type="checkbox" ng-model="checked">
+    <!-- Task add form -->
+    <form class="new-task" ng-submit="addTask(newTask, checked); newTask=''; checked='';">
+      	<input ng-model="newTask" type="text"
+        	name="text" placeholder="Type to add new tasks" />
+    	Checked <input type="checkbox" ng-model="checked">
 		<input type="submit" value="submit">
-	</form>
+    </form>
+
 </div>
   
