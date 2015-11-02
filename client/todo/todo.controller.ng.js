@@ -1,5 +1,11 @@
 'use strict'
 
+// Configures the Accounts UI
+Accounts.ui.config({
+	passwordSignupFields: "USERNAME_ONLY"
+});
+
+
 // Creates the manV1App app and passes in the packages
 angular.module('manV1App', ['angular-meteor', 'ui.router', 'ngAnimate']);
 
@@ -19,7 +25,9 @@ angular.module('manV1App')
 	$scope.addTask = function (newTask) {
     	$scope.tasks.push( {
       		text: newTask,
-      		createdAt: new Date() }
+      		createdAt: new Date(),					// current time
+      		owner: Meteor.userId(),					// _id of the logged in user
+      		username: Meteor.user().username }		// username of logged in user
     	); 
 	};
 

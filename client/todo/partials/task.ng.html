@@ -1,7 +1,7 @@
 <span>
 	<button class="delete" ng-click="tasks.remove(task)">&times;</button>
 	<input type="checkbox" ng-model="task.checked" class="toggle-checked" />
-	<span class="text">{{task.text}} - Date {{task.createdAt}}</span>
+	<span class="text"><strong>{{task.username}}</strong> - {{task.text}} - Date {{task.createdAt}}</span>
 </span>
 
 
