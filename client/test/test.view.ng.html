@@ -1,0 +1,18 @@
+<div>
+  	<ul ng-if="toggle">
+			<li ng-repeat="item in list | filter:search">
+				<div ng-include="'client/test/partials/person.ng.html'"></div>
+			</li>
+		</ul>
+
+	<button ng-hide="toggle" ng-click="toggle = true">Show Names</button>
+	<button ng-hide="!toggle" ng-click="toggle = false">Hide Names</button>
+
+	<form ng-submit="addPerson()">
+		Name<br><input type="text" placeholder="Name" ng-model="name"><br>
+		Age<br><input type="number" placeholder="Age" ng-model="age"><br>
+		Image<br><input type="url" placeholder="http://google.com/yourFace.jpg" ng-model="img">
+		<input type="submit" value="submit">
+	</form>
+</div>
+  

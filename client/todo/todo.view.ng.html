@@ -1,0 +1,17 @@
+<div>
+  	<ul ng-if="toggle">
+			<li ng-repeat="item in list | orderBy:checkbox">
+				<div ng-include="'client/todo/partials/task.ng.html'"></div>
+			</li>
+		</ul>
+
+	<button ng-hide="toggle" ng-click="toggle = true">Show Tasks</button>
+	<button ng-hide="!toggle" ng-click="toggle = false">Hide Tasks</button>
+
+	<form ng-submit="addTask()">
+		Task <input type="text" placeholder="Task" ng-model="task">
+		Checked <input type="checkbox" ng-model="checked">
+		<input type="submit" value="submit">
+	</form>
+</div>
+  
