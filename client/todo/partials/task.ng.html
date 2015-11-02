@@ -1,3 +1,7 @@
-<span><input type="checkbox" ng-checked="item.isChecked"> {{item.task}} - Created: {{item.createdAt}}</span>
+<span>
+	<button class="delete" ng-click="tasks.remove(task)">&times;</button>
+	<input type="checkbox" ng-model="task.checked" class="toggle-checked" />
+	<span class="text">{{task.text}} - Date {{task.createdAt}}</span>
+</span>
 
 

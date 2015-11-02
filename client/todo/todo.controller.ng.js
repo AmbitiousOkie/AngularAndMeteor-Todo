@@ -16,10 +16,9 @@ angular.module('manV1App')
 	$scope.toggle = true;
 
 	// Submit button runs these tasks
-	$scope.addTask = function (newTask, checked) {
+	$scope.addTask = function (newTask) {
     	$scope.tasks.push( {
-      		task: newTask,
-      		isChecked: checked,
+      		text: newTask,
       		createdAt: new Date() }
 
 

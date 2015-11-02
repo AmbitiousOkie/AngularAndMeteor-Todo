@@ -1,20 +1,19 @@
-<div>
-  	<ul ng-if="toggle">
-			<li ng-repeat="item in tasks">
-				<div ng-include="'client/todo/partials/task.ng.html'"></div>
-			</li>
-		</ul>
-
-	<button ng-hide="toggle" ng-click="toggle = true">Show Tasks</button>
-	<button ng-hide="!toggle" ng-click="toggle = false">Hide Tasks</button>
-
-    <!-- Task add form -->
-    <form class="new-task" ng-submit="addTask(newTask, checked); newTask=''; checked='';">
+<div class="container">
+  <header>
+    <h1>Todo List</h1>
+ 
+    <!-- add a form below the h1 -->
+    <form class="form-group" ng-submit="addTask(newTask); newTask='';">
       	<input ng-model="newTask" type="text"
-        	name="text" placeholder="Type to add new tasks" />
-    	Checked <input type="checkbox" ng-model="checked">
-		<input type="submit" value="submit">
+            name="text" placeholder="Type to add new tasks">
+            <input type="submit" value="submit">
     </form>
+  </header>
 
+  <ul>
+    <li ng-repeat="task in tasks" ng-class="{'checked': task.checked}">
+		<div ng-include="'client/todo/partials/task.ng.html'"></div>
+    </li>
+  </ul>
 </div>
   
