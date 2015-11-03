@@ -1,12 +1,10 @@
 'use strict'
 
-Meteor.publish('tasks', function(options, searchString) {
-  var where = {
-    'name': {
-      '$regex': '.*' + (searchString || '') + '.*',
-      '$options': 'i'
-    }
-  };
-  
-  return Tasks.find(where, options);
-});
+Meteor.publish('tasks', function () {
+    return Tasks.find({
+      $or: [
+        { private: {$ne: true} },
+        { owner: this.userId }
+      ]
+    });
+  });

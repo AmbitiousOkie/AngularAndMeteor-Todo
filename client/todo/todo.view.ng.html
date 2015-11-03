@@ -23,7 +23,8 @@
 
   <!-- Repeats the task template.ng.html -->
   <ul>
-    <li ng-repeat="task in tasks" ng-class="{'checked': task.checked}">
+    <li ng-repeat="task in tasks" 
+        ng-class="{'checked': task.checked, 'private': task.private}">
 		<div ng-include="'client/todo/partials/task.ng.html'"></div>
     </li>
   </ul>

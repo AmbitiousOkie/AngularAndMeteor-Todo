@@ -13,6 +13,9 @@ angular.module('manV1App', ['angular-meteor', 'ui.router', 'ngAnimate']);
 angular.module('manV1App')
 .controller('todoCtrl', function($scope, $meteor) {
 
+	// Subscribes the application to the Meteor collection
+	$scope.$meteorSubscribe('tasks');
+
 	// Sets the tasks variable to the meteor collection Tasks inside /model
 	$scope.tasks = $meteor.collection( function() {
 		return Tasks.find($scope.getReactively('query'), { sort: { createdAt: -1 } })
@@ -21,14 +24,21 @@ angular.module('manV1App')
 	// Sets the task toggle to oon
 	$scope.toggle = true;
 
-	// Submit button runs these tasks
+	// Allowed Meteor Methods for the app
 	$scope.addTask = function (newTask) {
-    	$scope.tasks.push( {
-      		text: newTask,
-      		createdAt: new Date(),					// current time
-      		owner: Meteor.userId(),					// _id of the logged in user
-      		username: Meteor.user().username }		// username of logged in user
-    	); 
+    	$meteor.call('addTask', newTask);
+    };
+ 
+    $scope.deleteTask = function (task) {
+    	$meteor.call('deleteTask', task._id);
+	};
+ 
+    $scope.setChecked = function (task) {
+    	$meteor.call('setChecked', task._id, !task.checked);
+    };
+
+	$scope.setPrivate = function (task) {
+		$meteor.call('setPrivate', task._id, ! task.private);
 	};
 
 	// Changes the queried scope when active
@@ -43,5 +53,7 @@ angular.module('manV1App')
 	$scope.incompleteCount = function () {
 		return Tasks.find({ checked: {$ne: true} }).count();
 	};
+
+
 
 });

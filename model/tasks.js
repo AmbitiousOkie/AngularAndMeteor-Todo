@@ -1,18 +1,50 @@
 // Creates a Mongo collection on the server and client called Tasks
 Tasks = new Mongo.Collection('tasks');
 
-// Things.allow({
-//   insert: function(userId, task) {
-//     task.createdAt = new Date();
-//     task.name_sort = task.name.toLowerCase();
-//     return true;
-//   },
-//   update: function(userId, task, fields, modifier) {
-//     task.createdAt = new Date();
-//     task.name_sort = task.name.toLowerCase();
-//     return true;
-//   },
-//   remove: function(userId, task) {
-//     return true;
-//   }
-// });
+// Methods available to both the client and server
+// This code is considered sensitive
+Meteor.methods({
+  addTask: function (text) {
+    // Make sure the user is logged in before inserting a task
+    if (! Meteor.userId()) {
+      throw new Meteor.Error('not-authorized');
+    }
+ 
+    Tasks.insert({
+      text: text,
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username
+    });
+  },
+
+  deleteTask: function (taskId) {
+  	var task = Tasks.findOne(taskId);
+  	if (task.private && task.owner !== Meteor.userId()) {
+  		// If the task is private, make sure only the owner can delete it
+  		throw new Meteor.Error('not-authorized');
+  	}
+    Tasks.remove(taskId);
+  },
+
+  setChecked: function (taskId, setChecked) {
+  	var task = Tasks.findOne(taskId);
+  	if (task.private && task.owner !== Meteor.userId()) {
+  		// If the task is private, make sure only the owner can delete it
+  		throw new Meteor.Error('not-authorized');
+  	}
+    Tasks.update(taskId, { $set: { checked: setChecked} });
+  },
+  setPrivate: function (taskId, setToPrivate) {
+    var task = Tasks.findOne(taskId);
+ 
+    // Make sure only the task owner can make a task private
+    if (task.owner !== Meteor.userId()) {
+      throw new Meteor.Error('not-authorized');
+    }
+ 
+    Tasks.update(taskId, { $set: { private: setToPrivate } });
+  }
+
+});
+

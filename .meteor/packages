@@ -32,5 +32,3 @@ accounts-facebook
 accounts-google
 angular:angular-animate
 stevezhu:lodash
-insecure
-autopublish
